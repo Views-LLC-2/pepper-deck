@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 // const cookieParser = require("cookie-parser");
-// const router = require("./routes/Router");
+// const DeckRouter = require("./routes/DeckRouter");
 const SignupRouter = require("./routes/SignupRouter");
 
 const app = express();
@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //for form data
-// app.use(cookieParser());
+app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, '../../public')));
@@ -19,31 +19,32 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.resolve(__dirname, '../../public')));
 }
 
+// app.use(express.static(path.resolve(__dirname, "../../public")));
+
 //Router to serve signup
-app.use('/access', SignupRouter)
+app.use("/access", SignupRouter);
 // NEED TO SET THIS UP
 // Router to serve middleware & response
-// app.use("/route", router);
-app.use('/deckRoute', DeckRouter)
+// app.use("/deckRoute", DeckRouter);
 
-app.get('/login', (req, res) => {
+app.get("/login", (req, res) => {
   return res
     .status(200)
-    .sendFile(path.resolve(__dirname, '../../public/index.html'));
+    .sendFile(path.resolve(__dirname, "../../public/index.html"));
 });
 
-app.get('/signup', (req, res) => {
+app.get("/signup", (req, res) => {
   return res
     .status(200)
-    .sendFile(path.resolve(__dirname, '../../public/index.html'));
+    .sendFile(path.resolve(__dirname, "../../public/index.html"));
 });
 
 // app.use('/login', loginRouter)
 // app.use('/signup', loginRouter)
 
 // Serve files
-app.get('/', (req, res) => {
-  return res.sendFile(path.resolve(__dirname, '../../public/index.html'));
+app.get("/", (req, res) => {
+  return res.sendFile(path.resolve(__dirname, "../../public/index.html"));
 });
 
 // Global error handler

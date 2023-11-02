@@ -2,6 +2,8 @@ const db = require("../models/model");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const salt = bcrypt.genSaltSync(10);
+const jwt = require("jsonwebtoken");
+const { secretKey } = require("./config"); // Import the secret key
 
 const userController = {};
 
@@ -20,6 +22,7 @@ userController.createUser = async (req, res, next) => {
         "; type: ",
         typeof result.rows[0].count
       );
+
       if (Number(result.rows[0].count) >= 1) {
         res.locals.usernameTaken = true;
         return next();
@@ -33,14 +36,18 @@ userController.createUser = async (req, res, next) => {
       });
     });
 
-  const hashedPassword = bcrypt.hashSync(userPassword, salt)
-
-  const createUserQuery = `INSERT INTO users ("_id", "username", "password") VALUES ('${crypto.randomUUID()}', '${userName}', '${hashedPassword}');`;
+  const hashedPassword = bcrypt.hashSync(userPassword, salt);
+  const userID = crypto.randomUUID();
+  const createUserQuery = `INSERT INTO users ("_id", "username", "password") VALUES ('${userID}', '${userName}', '${hashedPassword}');`;
 
   db.query(createUserQuery)
     .then((result) => {
       console.log("creatueUser result: ", result);
       // res.locals.userID = idk
+      const token = jwt.sign({ userID: userID }, secretKey, {
+        expiresIn: "1h",
+      });
+      res.locals.token = token;
       return next();
     })
     .catch((err) => {
@@ -67,8 +74,12 @@ userController.login = (req, res, next) => {
         result.rows.length &&
         bcrypt.compareSync(userPassword, result.rows[0].password)
       ) {
-        res.locals.loginSuccess = true;
         res.locals.userID = result._id;
+        const token = jwt.sign({ userID: res.locals.userID }, secretKey, {
+          expiresIn: "1h",
+        });
+        res.locals.token = token;
+        res.locals.loginSuccess = true;
       } else {
         res.locals.loginSuccess = false;
       }

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
-const deckController = require("../controllers/deckController");
+// const deckController = require("../controllers/deckController");
 // const cookieController = require("../controllers/cookieController");
 
 router.get("/", (req, res) => {
@@ -12,15 +12,22 @@ router.get("/", (req, res) => {
 });
 
 // Sign up
-router.post("/signup", userController.createUser, (req, res) => {
-  // console.log(res.locals.newUser);
-  res.sendStatus(200);
-});
+router.post(
+  "/signup",
+  userController.createUser,
+  // cookieController.setCookie,
+  // cookieController.verifyCookie,
+  (req, res) => {
+    // console.log(res.locals.newUser);
+    res.sendStatus(200);
+  }
+);
 
 router.post(
   "/login",
   userController.login,
-  deckController.getDecks,
+  // cookieController.setCookie,
+  // cookieController.verifyCookie,
   (req, res) => {
     return res.status(200).json(res.locals);
   }
