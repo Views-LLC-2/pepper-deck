@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Deck.css';
 import Card from '../components/Card';
 
 function Deck(props) {
-  const testArray = [
+  const [deck, setDeck] = useState([
     {
       front: 'question1',
       back: 'answer1'
@@ -15,19 +15,38 @@ function Deck(props) {
     {
       front: 'question3',
       back: 'answer3'
+    },
+    {
+      front: 'question4',
+      back: 'answer4'
+    },
+    {
+      front: 'question5',
+      back: 'answer5'
     }
-  ];
+  ]);
 
 
   return (
     <div>
       <div className='job_description'>
-        <h1>JOB TITLE</h1>
-        <p>job description</p>
+        <h1>Frontend Engineer</h1>
+        <p>
+          Develop data processing pipeline to ingest and enrich product data for internal and external customers
+        </p>
+        <p>
+          Develop our search platform that helps our internal and external customers to discover, monetize our product inventory
+        </p>
+        <p>
+          Help implement our new applications and infrastructure leveraging: Google Cloud, Kubernetes
+        </p>
+        <p>
+          Ensure high code-quality and high availability of our inventory platform
+        </p>
       </div>
       <br></br>
       <div className='cards_container'>
-        {testArray.map(card => <Card front={card.front} back={card.back}/>)}
+        {deck.map(card => <Card front={card.front} back={card.back}/>)}
       </div>
       <br></br>
       <div>
