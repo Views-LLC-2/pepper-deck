@@ -1,19 +1,14 @@
 {
-  "name": "fit-buddy",
+  "name": "pepper-deck",
   "version": "1.0.0",
-  "description": "Meal Prepping Website",
+  "description": "SWE Interview Prep",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node server/server.js",
     "build": "webpack",
     "dev": "PORT=8080 NODE_ENV=development node src/server/server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ctstamper/fit-buddy.git"
-  },
   "author": "Christopher Stamper",
-  "homepage": "https://github.com/ctstamper/fit-buddy#readme",
   "dependencies": {
     "@babel/eslint-parser": "^7.22.15",
     "@redux-devtools/extension": "^3.2.5",
