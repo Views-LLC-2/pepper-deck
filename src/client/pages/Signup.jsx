@@ -68,7 +68,7 @@ const Signup = () => {
         <input className='login-submit-btn' type='submit' value='Sign Up' />
         <p1 style={{ color: 'red' }}>{usernameTaken && 'Username Taken. Please Try again.'}</p1>
         <div className='new-user-div'>
-          <Link to='/' className='custom-link'>
+          <Link to='/login' className='custom-link'>
             Existing User?
           </Link>
         </div>
