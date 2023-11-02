@@ -10,21 +10,18 @@ import './App.css';
 const App = () => {
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
-          <li>
-            <Link to='/signup'>Sign Up</Link>
-          </li>
-          <li>
-            <Link to='/deck'>Deck</Link>
-          </li>
-        </ul>
+      <nav className='navBar'>
+        
+         <div className='logoTitle'>
+            <h1>PepperDeck</h1>
+         </div>
+         <div className='rightNav'>
+            <Link className='linkItem' to='/'>Home</Link>
+            <Link className='linkItem' to='/login'>Login</Link>
+            <Link className='linkItem' to='/signup'>Sign Up</Link>
+            <Link className='linkItem' to='/deck'>Deck</Link>
+         </div>
+      
       </nav>
       <Routes>
         <Route path='/' element={<Home />}/>

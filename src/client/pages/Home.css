@@ -14,7 +14,7 @@
   align-items: flex-start;
   color: aliceblue;
   margin-bottom: 16px;
-  font-size: 12px;
+  font-size: 10px;
   
 }
 .catHeader {
@@ -27,7 +27,7 @@
   color: aliceblue;
   font-weight: bold;
   margin-bottom: 16px;
-  font-size: 24px;
+  font-size: 18px;
 }
 .addIntBtnContainer {
   margin-top: 16px;
