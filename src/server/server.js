@@ -1,22 +1,25 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-// const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser");
+
 // const DeckRouter = require("./routes/DeckRouter");
 const SignupRouter = require("./routes/SignupRouter");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+// app.use(cors());
+app.use(cors({ credentials: true, origin: "http://localhost:8080" }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //for form data
 app.use(cookieParser());
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.resolve(__dirname, '../../public')));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "../../public")));
 } else {
-  app.use(express.static(path.resolve(__dirname, '../../public')));
+  app.use(express.static(path.resolve(__dirname, "../../public")));
 }
 
 // app.use(express.static(path.resolve(__dirname, "../../public")));

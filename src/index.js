@@ -5,8 +5,8 @@ import Login from "./client/pages/Login.jsx";
 import Signup from "./client/pages/Signup.jsx";
 import App from "./App.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './index.css';
 
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

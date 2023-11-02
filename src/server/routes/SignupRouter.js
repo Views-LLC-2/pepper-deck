@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 // const deckController = require("../controllers/deckController");
-// const cookieController = require("../controllers/cookieController");
+const cookieController = require("../controllers/cookieController");
 
 router.get("/", (req, res) => {
   console.log("HELLO");
@@ -15,8 +15,8 @@ router.get("/", (req, res) => {
 router.post(
   "/signup",
   userController.createUser,
-  // cookieController.setCookie,
-  // cookieController.verifyCookie,
+  cookieController.setCookie,
+  cookieController.verifyCookie,
   (req, res) => {
     // console.log(res.locals.newUser);
     res.sendStatus(200);

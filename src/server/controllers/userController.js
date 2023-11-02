@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require("jsonwebtoken");
-const { secretKey } = require("./config"); // Import the secret key
+const { secretKey } = require("../../config");
 
 const userController = {};
 
@@ -24,8 +24,31 @@ userController.createUser = async (req, res, next) => {
       );
 
       if (Number(result.rows[0].count) >= 1) {
-        res.locals.usernameTaken = true;
-        return next();
+        return res.status(401).json({message: 'Failed to Sign Up: Username Taken'})
+      }
+      else {
+        const hashedPassword = bcrypt.hashSync(userPassword, salt);
+        const userID = crypto.randomUUID();
+        const createUserQuery = `INSERT INTO users ("_id", "username", "password") VALUES ('${userID}', '${userName}', '${hashedPassword}');`;
+
+        db.query(createUserQuery)
+          .then((result) => {
+            console.log("creatueUser result: ", result);
+            const token = jwt.sign({ userID: userID }, secretKey, {
+              expiresIn: "1h",
+            });
+            res.locals.token = token;
+            res.locals.userName = userName;
+            res.locals.userID = userID;
+            return next();
+          })
+          .catch((err) => {
+            return next({
+              log: "Express error handler caught error in userController.createUser",
+              status: err.status,
+              message: { err: err },
+            });
+          });
       }
     })
     .catch((err) => {
@@ -36,27 +59,27 @@ userController.createUser = async (req, res, next) => {
       });
     });
 
-  const hashedPassword = bcrypt.hashSync(userPassword, salt);
-  const userID = crypto.randomUUID();
-  const createUserQuery = `INSERT INTO users ("_id", "username", "password") VALUES ('${userID}', '${userName}', '${hashedPassword}');`;
+  // const hashedPassword = bcrypt.hashSync(userPassword, salt);
+  // const userID = crypto.randomUUID();
+  // const createUserQuery = `INSERT INTO users ("_id", "username", "password") VALUES ('${userID}', '${userName}', '${hashedPassword}');`;
 
-  db.query(createUserQuery)
-    .then((result) => {
-      console.log("creatueUser result: ", result);
-      // res.locals.userID = idk
-      const token = jwt.sign({ userID: userID }, secretKey, {
-        expiresIn: "1h",
-      });
-      res.locals.token = token;
-      return next();
-    })
-    .catch((err) => {
-      return next({
-        log: "Express error handler caught error in userController.createUser",
-        status: err.status,
-        message: { err: err },
-      });
-    });
+  // db.query(createUserQuery)
+  //   .then((result) => {
+  //     console.log("creatueUser result: ", result);
+  //     // res.locals.userID = idk
+  //     const token = jwt.sign({ userID: userID }, secretKey, {
+  //       expiresIn: "1h",
+  //     });
+  //     res.locals.token = token;
+  //     return next();
+  //   })
+  //   .catch((err) => {
+  //     return next({
+  //       log: "Express error handler caught error in userController.createUser",
+  //       status: err.status,
+  //       message: { err: err },
+  //     });
+  //   });
 
   // res.locals.newUser
 };
@@ -65,7 +88,7 @@ userController.login = (req, res, next) => {
   // check database if user exists
   const { userName, userPassword } = req.body;
 
-  const findUserQuery = `SELECT password FROM Users WHERE username = '${userName}';`;
+  const findUserQuery = `SELECT _id, password FROM Users WHERE username = '${userName}';`;
 
   db.query(findUserQuery)
     .then((result) => {
@@ -74,7 +97,7 @@ userController.login = (req, res, next) => {
         result.rows.length &&
         bcrypt.compareSync(userPassword, result.rows[0].password)
       ) {
-        res.locals.userID = result._id;
+        res.locals.userID = result.rows[0]._id;
         const token = jwt.sign({ userID: res.locals.userID }, secretKey, {
           expiresIn: "1h",
         });

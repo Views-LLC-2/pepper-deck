@@ -17,7 +17,7 @@ const Login = () => {
   const loginUser = async (ev) => {
     ev.preventDefault();
 
-    const response = await fetch("http://localhost:3000/userAccess/login", {
+    const response = await fetch("http://localhost:3000/access/login", {
       method: "POST",
       body: JSON.stringify({ userNameLogin, userPasswordLogin }),
       headers: {
