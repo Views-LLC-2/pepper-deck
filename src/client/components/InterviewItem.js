@@ -1,24 +1,26 @@
+import React, { useEffect, useState } from 'react';
+import './InterviewItem.css';
 
+const InterviewItem = ({ date, position, company, index }) => {
+  const [visible, setVisible] = useState(false);
 
-import './InterviewItem.css'
+  useEffect(() => {
+    // Delay the appearance of each item by multiplying the index
+    const timeout = setTimeout(() => {
+      setVisible(true);
+    }, index * 200); // Adjust the delay duration as needed
 
-const InterviewItem = (props) => {
- return(
-    <div className="itemContainer relative flex w-96 rounded-md bg-white bg-clip-border text-gray-700 shadow-md">
-      <div className="interviewDate">{props.date}</div>
-      <div className="companyNameTitle">{props.company}</div>
-      <div className="positionTitle">{props.position}</div>
+    // Clear the timeout when the component unmounts
+    return () => clearTimeout(timeout);
+  }, [index]);
+
+  return (
+    <div className={`itemContainer hvr-float rounded-md bg-white bg-clip-border text-gray-700 shadow-md ${visible ? 'fade-in' : ''}`}>
+      <div className="interviewDate">{date}</div>
+      <div className="companyNameTitle">{company}</div>
+      <div className="positionTitle">{position}</div>
     </div>
- )
-}
-
-// function interviewItem() {
-//   return( <div className="itemContainer">
-//     <div className="companyNameTitle">Facebook</div>
-//     <div className="interviewDate">10/31</div>
-//     <div className="positionTitle">Front-end Engineer</div>
-//   </div>
-//  )
-// }
+  );
+};
 
 export default InterviewItem;
