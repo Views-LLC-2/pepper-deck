@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './InterviewItem.css';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 const InterviewItem = ({ date, position, company, index }) => {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
