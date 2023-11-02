@@ -6,31 +6,43 @@ const Signup = () => {
 
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [usernameTaken, setUsernameTaken] = useState(false)
 
   const register = async (ev) => {
     ev.preventDefault(); //This will not let the user go to the next page yet:
 
-    const response = await fetch("http://localhost:3000/access/signup", {
-      method: "POST",
-      body: JSON.stringify({ userName, userPassword }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    setUsernameTaken(true);
+    // const response = await fetch("http://localhost:3000/access/signup", {
+    //   method: "POST",
+    //   body: JSON.stringify({ userName, userPassword }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
 
-    const responseData = await response.json();
-    console.log("response Data from signup", responseData);
+    // const responseData = await response.json();
+    // console.log("response Data from signup", responseData);
 
-    if (response.status === 200) {
-      alert("Registration Successful");
+    // if (response.status === 200) {
+    //   alert("Registration Successful");
 
-      navigate("/");
-    } else {
-      alert("Registration failed");
-    }
+    //   navigate("/");
+    // } else {
+    //   alert("Registration failed");
+    // }
   };
 
   return (
+    <div className="login-page">
+      <nav className='navBar'>
+         <div className='logoTitle'>
+            <h1><Link className='linkItem' to='/'>Pepper Deck</Link></h1>
+         </div>
+         <div className='rightNav'>
+            <Link className='linkItem' to='/login'>Login</Link>
+            <Link className='linkItem' to='/signup'>Sign Up</Link>
+         </div>
+      </nav>
     <div className='login-div'>
       <div className='login-heading-banner'></div>
       <form className='login-form' onSubmit={register}>
@@ -54,12 +66,14 @@ const Signup = () => {
           />
         </div>
         <input className='login-submit-btn' type='submit' value='Sign Up' />
+        <p1 style={{ color: 'red' }}>{usernameTaken && 'Username Taken. Please Try again.'}</p1>
         <div className='new-user-div'>
           <Link to='/' className='custom-link'>
             Existing User?
           </Link>
         </div>
       </form>
+    </div>
     </div>
   );
 };

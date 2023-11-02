@@ -3,6 +3,7 @@ import './Home.css';
 // import Icon from '../assets/icons8-add-new-50.png';
 import { useState } from "react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [showInput, setShowInput] = useState(false);
@@ -52,6 +53,16 @@ function Home() {
   };
 
   return (
+    <div className="home-page">
+      <nav className='navBar'>
+         <div className='logoTitle'>
+            <h1><Link className='linkItem' to='/'>Pepper Deck</Link></h1>
+         </div>
+         <div className='rightNav'>
+            <Link className='linkItem' to='/login'>Login</Link>
+            <Link className='linkItem' to='/signup'>Sign Up</Link>
+         </div>
+      </nav>
     <div className="bodyContainer">
       <div className='titleContainer fade-in'>
         <h2 className='homeTitle'>Upcoming Interviews</h2>
@@ -114,6 +125,7 @@ function Home() {
           </button>
         </div>
       )}
+    </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Deck.css';
 import Card from '../components/Card';
+import { Link } from 'react-router-dom';
 
 function Deck(props) {
   const [deck, setDeck] = useState([
@@ -29,6 +30,16 @@ function Deck(props) {
 
   return (
     <div>
+      <nav className='navBar'>
+         <div className='logoTitle'>
+            <h1><Link className='linkItem' to='/'>Pepper Deck</Link></h1>
+         </div>
+         <div className='rightNav'>
+            <Link className='linkItem' to='/login'>Login</Link>
+            <Link className='linkItem' to='/signup'>Sign Up</Link>
+         </div>
+      </nav>
+    <div>
       <div className='job_description'>
         <h1>Frontend Engineer</h1>
         <p>
@@ -54,6 +65,7 @@ function Deck(props) {
           +
         </button>
       </div>
+    </div>
     </div>
   );
 }

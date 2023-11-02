@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,32 +14,49 @@ const Login = () => {
 
   const [userNameLogin, setUserNameLogin] = useState("");
   const [userPasswordLogin, setUserPasswordLogin] = useState("");
+  const [failedLogin, setFailedLogin] = useState(false);
+  console.log(failedLogin)
 
   const loginUser = async (ev) => {
     ev.preventDefault();
-
-    const response = await fetch("http://localhost:3000/userAccess/login", {
-      method: "POST",
-      body: JSON.stringify({ userNameLogin, userPasswordLogin }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const responseData = await response.json();
-
-    if (response.status === 200) {
-      console.log("responseData", responseData);
-      navigate("/");
+    console.log('ayeeee')
+    if (userNameLogin === 'testUser' && userPasswordLogin === 'testPassword') {
+      navigate('/home');
     } else {
-      alert("credentials failed");
+      console.log('aye')
+      setFailedLogin(true);
     }
+    // const response = await fetch("http://localhost:3000/userAccess/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({ userNameLogin, userPasswordLogin }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+
+    // const responseData = await response.json();
+
+    // if (response.status === 200) {
+    //   console.log("responseData", responseData);
+    //   navigate("/");
+    // } else {
+    //   alert("credentials failed");
+    // }
   };
 
   return (
+    <div className="login-page">
+      <nav className='navBar'>
+         <div className='logoTitle'>
+            <h1><Link className='linkItem' to='/'>Pepper Deck</Link></h1>
+         </div>
+         <div className='rightNav'>
+            <Link className='linkItem' to='/login'>Login</Link>
+            <Link className='linkItem' to='/signup'>Sign Up</Link>
+         </div>
+      </nav>
     <div className='login-div'>
       <div className='login-heading-banner'></div>
-      <h1> Good to see you again </h1>
       <form className='login-form' onSubmit={loginUser}>
         <h2 className='login-heading'> Login </h2>
         <div className='username-div-login'>
@@ -60,12 +78,14 @@ const Login = () => {
           />
         </div>
         <input className='login-submit-btn' type='submit' value='Submit' />
+        <p1 style={{ color: 'red' }}>{failedLogin && 'Incorrect Username or Password. Please Try again.'}</p1>
         <div className='new-user-div'>
           <Link to='/signup' className='custom-link'>
             Dont have an account?
           </Link>
         </div>
       </form>
+    </div>
     </div>
   );
 };
