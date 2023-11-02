@@ -3,18 +3,15 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: {
-    app: path.resolve(__dirname, 'src/index.js'),
-  },
+  entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    publicPath: '/',
+    path: path.resolve(__dirname, 'public'),
+    filename: 'main.js',
   },
   module: {
     rules: [
       {
-        test: /\.jsx?/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
@@ -22,26 +19,32 @@ module.exports = {
         },
       },
       {
-        test: /\.s?css/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /.s?css$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'App',
+      title: 'Development',
       template: path.resolve(__dirname, 'src/index.html'),
-      filename: 'app.html',
-      chunks: ['app'],
     }),
   ],
   devServer: {
+    host: 'localhost',
+    port: "8080",
+    open: true,
+    hot: true,
+    liveReload: true,
     static: {
-      publicPath: '/',
-      directory: path.resolve(__dirname, 'dist'),
+      publicPath: "/public",
+      directory: path.resolve(__dirname, 'public')
     },
     proxy: {
-      '/': 'http://localhost:3000',
+      '/': 'http://localhost:3000'
     },
+  },
+  resolve: {
+    extensions: [".js", ".jsx", ".json"],
   },
 };

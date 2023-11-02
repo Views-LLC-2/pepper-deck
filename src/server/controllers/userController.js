@@ -33,16 +33,7 @@ userController.createUser = async (req, res, next) => {
       });
     });
 
-  const hashedPassword = bcrypt
-    .hashSync(userPassword, salt)
-    .then((data) => data)
-    .catch((err) => {
-      return next({
-        log: "Express error handler caught error in userController.createUser",
-        status: err.status,
-        message: { err: err },
-      });
-    });
+  const hashedPassword = bcrypt.hashSync(userPassword, salt)
 
   const createUserQuery = `INSERT INTO users ("_id", "username", "password") VALUES ('${crypto.randomUUID()}', '${userName}', '${hashedPassword}');`;
 
