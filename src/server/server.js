@@ -24,6 +24,7 @@ app.use('/access', SignupRouter)
 // NEED TO SET THIS UP
 // Router to serve middleware & response
 // app.use("/route", router);
+app.use('/deckRoute', DeckRouter)
 
 app.get('/login', (req, res) => {
   return res
