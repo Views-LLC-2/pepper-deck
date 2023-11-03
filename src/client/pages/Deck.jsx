@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Deck.css';
 import Card from '../components/Card';
+import { Link } from 'react-router-dom';
 import AddCardModal from '../components/AddCardModal';
 
 function Deck(props) {
@@ -38,6 +39,15 @@ function Deck(props) {
 
   return (
     <div>
+      <nav className='navBar'>
+         <div className='logoTitle'>
+            <h1><Link className='linkItem' to='/'>Pepper Deck</Link></h1>
+         </div>
+         <div className='rightNav'>
+            <Link className='linkItem' to='/home'>Back</Link>
+         </div>
+      </nav>
+    <div>
       <div className='job_description'>
         <h1>Frontend Engineer</h1>
         <p>
@@ -62,6 +72,7 @@ function Deck(props) {
         <button className='addCardBtn' onClick={() => setIsModalOpen(true)}>+</button>
       </div>
       <AddCardModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onAddCard={handleAddCard} />
+    </div>
     </div>
   );
 }

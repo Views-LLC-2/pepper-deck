@@ -25,17 +25,17 @@ app.use('/access', SignupRouter)
 // Router to serve middleware & response
 // app.use("/route", router);
 
-app.get('/login', (req, res) => {
+app.get('/*', (req, res) => {
   return res
     .status(200)
     .sendFile(path.resolve(__dirname, '../../public/index.html'));
 });
 
-app.get('/signup', (req, res) => {
-  return res
-    .status(200)
-    .sendFile(path.resolve(__dirname, '../../public/index.html'));
-});
+// app.get('/signup', (req, res) => {
+//   return res
+//     .status(200)
+//     .sendFile(path.resolve(__dirname, '../../public/index.html'));
+// });
 
 // app.use('/login', loginRouter)
 // app.use('/signup', loginRouter)
